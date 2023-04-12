@@ -27,6 +27,9 @@ class HomeView extends StatelessWidget {
               text: "Picked Image Succesfully",
               context: context,
               success: true);
+        } else if (state is HomeGetGalleryLoadingState) {
+          showSnackBar(
+              context: context, text: "Uploading Image", success: true);
         } else if (state is HomeUploadImageSuccessState) {
           HomeCubit.get(context).getGallery(context);
         }
@@ -111,6 +114,10 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if (state is HomeUploadImageLoadingState)
+                      const Center(
+                        child: LinearProgressIndicator(),
+                      ),
                     state is HomeGetGalleryLoadingState
                         ? const Center(child: CircularProgressIndicator())
                         : Expanded(
